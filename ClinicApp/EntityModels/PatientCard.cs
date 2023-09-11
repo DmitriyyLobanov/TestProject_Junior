@@ -22,5 +22,8 @@ namespace ClinicApp.EntityModels
         public String Address { get; set; }
         public String PhoneNumber { get; set; }
         public List<Request> Requests { get; set; }
+        public Byte Age { get; set; }
+
+
     }
 }

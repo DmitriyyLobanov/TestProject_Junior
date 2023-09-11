@@ -102,7 +102,8 @@ namespace ClinicApp.XamlPages
                             PhoneNumber = phone.ToString(),
                             DateOfBirth = dateOfBirth.GetValueOrDefault(),
                             Address = address,
-                            Gender = gender
+                            Gender = gender,
+                            Age = CalculatePatientAge((System.DateTime)dateOfBirth)
                         };
                         var sucess = repository.AddPatientCard(patientCard);
                         if (await sucess)
@@ -169,6 +170,20 @@ namespace ClinicApp.XamlPages
             datePickerBirth.SelectedDate = cardToModify.DateOfBirth;
             txtBoxAddress.Text = cardToModify.Address;
             comboBlockGender.SelectedIndex = (Int32)cardToModify.Gender;
+        }
+
+
+        /// <summary>
+        /// The method of calculating the age of the patient taking into account leap years.
+        /// </summary>
+        /// <param name="birthDate">Дата рождения</param>
+        /// <returns>Age (Byte data type)</returns>
+        private Byte CalculatePatientAge(DateTime birthDate)
+        {
+            var today = DateTime.Today;
+            var age = today.Year - birthDate.Year;
+            if (birthDate.Date > today.AddYears(-age)) age--;
+            return (Byte)age;
         }
     }
 }
